@@ -1,4 +1,4 @@
-export default 
+export default
 `#version 300 es
 precision highp float;
 
@@ -17,11 +17,12 @@ out vec4 fNormal;
 void main() {
   mat4 modelView = u_view * u_model;
 
-  // posição final do vertice
+  // Transforma o vértice para o espaço do clipe.
   gl_Position  = u_projection * modelView * position;
-  gl_Position /= gl_Position.w;
 
-  fPosition = position;
+  // Passa as variáveis para o shader de fragmentos.
+  // A transformação da normal é feita aqui para otimizar.
+  fPosition = modelView * position;
+  fNormal = transpose(inverse(modelView)) * normal;
   fColor = color;
-  fNormal = normal;
 }`

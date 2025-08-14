@@ -3,6 +3,7 @@ export default class Light {
     this.pos = vec4.fromValues(position[0], position[1], position[2], 1.0);
     this.angle = 0;
 
+    // Propriedades da luz: cor ambiente, difusa e especular.
     this.amb_c = vec4.fromValues(color[0], color[1], color[2], color[3]);
     this.amb_k = 0.2;
 
@@ -14,33 +15,26 @@ export default class Light {
     this.esp_p = 100;
   }
 
-  createUniforms(gl, program, name){
-    let posLoc = gl.getUniformLocation(program, `light_pos_${name}`);
-    gl.uniform4fv(posLoc, this.pos);
-
-    const ambCLoc = gl.getUniformLocation(program, `light_amb_c_${name}`);
-    gl.uniform4fv(ambCLoc, this.amb_c);
-    const ambKLoc = gl.getUniformLocation(program, `light_amb_k_${name}`)
-    gl.uniform1f(ambKLoc, this.amb_k);
-
-    const difCLoc = gl.getUniformLocation(program, `light_dif_c_${name}`);
-    gl.uniform4fv(difCLoc, this.dif_c);
-    const difKLoc = gl.getUniformLocation(program, `light_dif_k_${name}`);
-    gl.uniform1f(difKLoc, this.dif_k);
-
-    const espCLoc = gl.getUniformLocation(program, `light_esp_c_${name}`);
-    gl.uniform4fv(espCLoc, this.pos);
-    const espKLoc = gl.getUniformLocation(program, `light_esp_k_${name}`);
-    gl.uniform1f(espKLoc, this.esp_k);
-    const espPLoc = gl.getUniformLocation(program, `light_esp_p_${name}`);
-    gl.uniform1f(espPLoc, this.esp_p);
+  // Envia as propriedades da luz para o shader.
+  createUniforms(gl, program, name) {
+    gl.uniform4fv(gl.getUniformLocation(program, `light_pos_${name}`), this.pos);
+    gl.uniform4fv(gl.getUniformLocation(program, `light_amb_c_${name}`), this.amb_c);
+    gl.uniform1f(gl.getUniformLocation(program, `light_amb_k_${name}`), this.amb_k);
+    gl.uniform4fv(gl.getUniformLocation(program, `light_dif_c_${name}`), this.dif_c);
+    gl.uniform1f(gl.getUniformLocation(program, `light_dif_k_${name}`), this.dif_k);
+    gl.uniform4fv(gl.getUniformLocation(program, `light_esp_c_${name}`), this.esp_c);
+    gl.uniform1f(gl.getUniformLocation(program, `light_esp_k_${name}`), this.esp_k);
+    gl.uniform1f(gl.getUniformLocation(program, `light_esp_p_${name}`), this.esp_p);
   }
 
-  setPos(x, y, z, gl, program0, program1, name){
+  // Atualiza a posição da luz em ambos os programas de shader.
+  setPos(x, y, z, gl, program0, program1, name) {
     this.pos = vec4.fromValues(x, y, z, 1.0);
-    let posLoc0 = gl.getUniformLocation(program0, `light_pos_${name}`);
-    gl.uniform4fv(posLoc0, this.pos);
-    let posLoc1 = gl.getUniformLocation(program1, `light_pos_${name}`);
-    gl.uniform4fv(posLoc1, this.pos);
+    
+    gl.useProgram(program0);
+    gl.uniform4fv(gl.getUniformLocation(program0, `light_pos_${name}`), this.pos);
+
+    gl.useProgram(program1);
+    gl.uniform4fv(gl.getUniformLocation(program1, `light_pos_${name}`), this.pos);
   }
 }

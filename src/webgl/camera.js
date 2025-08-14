@@ -30,28 +30,28 @@ export default class Camera {
     return this.eye;
   }
 
+  // Atualiza a matriz de visualização (View matrix).
   updateViewMatrix() {
     mat4.identity(this.view);
     mat4.lookAt(this.view, this.eye, this.at, this.up);
   }
 
+  // Atualiza a matriz de projeção (Projection matrix).
   updateProjectionMatrix() {
     mat4.identity(this.proj);
     mat4.perspective(this.proj, this.fovy, this.aspect, this.near, this.far);
   }
 
+  // Simula a órbita da câmera ao redor da cena.
   rotateAroundScene() {
-    const radius = 5.0; // Raio da órbita
-    const speed = 0.01; // Velocidade de rotação
+    const radius = 5.0;
+    const speed = 0.003;
 
-    // Atualiza o ângulo
     this.angle += speed;
 
-    // Calcula a nova posição eye com base no ângulo
     this.eye[0] = radius * Math.sin(this.angle);
     this.eye[2] = radius * Math.cos(this.angle);
 
-    // Atualiza as matrizes view e projection
     this.updateViewMatrix();
     this.updateProjectionMatrix();
   }
