@@ -1,6 +1,6 @@
 # Trabalho de Computação Gráfica – Cena 3D Interativa
 
-> Projeto desenvolvido para a disciplina de Computação Gráfica, consistindo na criação de uma cena 3D renderizada em tempo real com WebGL 2. A aplicação carrega múltiplos modelos, aplica transformações independentes, utiliza um sistema de iluminação dinâmico com múltiplas fontes de luz e permite interação do usuário para manipulação da malha.
+Projeto desenvolvido para a disciplina de Computação Gráfica, consistindo na criação de uma cena 3D renderizada em tempo real com WebGL 2. A aplicação carrega múltiplos modelos, aplica transformações independentes, utiliza um sistema de iluminação dinâmico com múltiplas fontes de luz e permite interação do usuário para manipulação da malha.
 
 ---
 
